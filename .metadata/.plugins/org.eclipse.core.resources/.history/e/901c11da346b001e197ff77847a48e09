@@ -1,0 +1,95 @@
+package com.example.PaymentControllerTest;
+
+import com.example.demo.PaymentServiceApplication;
+import com.example.demo.entities.Cart;
+import com.example.demo.entities.Item;
+import com.example.demo.entities.Payment;
+import com.example.demo.repository.CartRepository;
+import com.example.demo.repository.PaymentRepository;
+import com.example.demo.services.PaymentServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import java.util.Arrays;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+@SpringBootTest(classes = PaymentServiceApplication.class) 
+public class PaymentControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
+    private PaymentServiceImpl paymentServiceImpl;
+
+    @MockBean
+    private CartRepository cartRepository;
+
+    @MockBean
+    private PaymentRepository paymentRepository;
+
+    @InjectMocks
+    private PaymentController paymentController;
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    public void shouldInitiatePaymentTransactionSuccessfully() throws Exception {
+        when(paymentServiceImpl.initiatePaymentTransaction(any(Payment.class))).thenReturn(true);
+
+        Cart cart = new Cart();
+        cart.setUserId("userId");
+        Item item = new Item("itemId", "itemName", 50.0, 2);
+        cart.addItem(item);
+        when(cartRepository.findByUserId("userId")).thenReturn(cart);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/payment/initiate")
+                .content("{\"userId\":\"userId\",\"amount\":100.0,\"cardNumber\":\"1234567890123456\",\"cvv\":\"123\",\"expiry\":\"12/23\",\"status\":\"Pending\"}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().string(""));
+    }
+
+    @Test
+    public void shouldFailToInitiatePaymentTransaction_InvalidPaymentInfo() throws Exception {
+        Cart cart = new Cart();
+        cart.setUserId("userId");
+        Item item = new Item("itemId", "itemName", 50.0, 2);
+        cart.addItem(item);
+        when(cartRepository.findByUserId("userId")).thenReturn(cart);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/payment/initiate")
+                .content("{\"userId\":\"userId\",\"amount\":100.0,\"cardNumber\":\"\",\"cvv\":\"123\",\"expiry\":\"12/23\",\"status\":\"Pending\"}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().string("Fill all the requir"));
+    }
+
+    @Test
+    public void shouldGetUsersPurchases() throws Exception {
+        Payment payment = new Payment("userId", 100.0, "1234567890123456", "123", "12/23", "Completed");
+        when(paymentRepository.findPaymentsByUserId("userId")).thenReturn(Arrays.asList(payment));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/payment/userId/purchases")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].userId").value("userId"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].amount").value(100.0))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].status").value("Completed"));
+    }
+}

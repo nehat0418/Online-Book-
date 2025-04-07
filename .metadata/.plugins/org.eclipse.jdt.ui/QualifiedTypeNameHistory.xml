@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="com.example.demo.controller.CartController"/>
+    <fullyQualifiedTypeName name="com.example.demo.services.CartServiceImpl"/>
+    <fullyQualifiedTypeName name="com.example.demo.repository.CartRepository"/>
+    <fullyQualifiedTypeName name="com.example.demo.services.PaymentService"/>
+    <fullyQualifiedTypeName name="com.example.demo.services.PaymentServiceImpl"/>
+</qualifiedTypeNameHistroy>

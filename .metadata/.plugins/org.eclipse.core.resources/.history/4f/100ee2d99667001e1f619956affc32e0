@@ -1,0 +1,12 @@
+package com.example.demo.services;
+
+import com.example.demo.entities.Payment;
+
+public interface PaymentService {
+    boolean initiatePaymentTransaction(Payment payment);
+    boolean validatePaymentInformation(Payment payment);
+	Payment getPaymentById(String paymentId);
+	boolean validatePayment(Payment payment);
+	
+}
+

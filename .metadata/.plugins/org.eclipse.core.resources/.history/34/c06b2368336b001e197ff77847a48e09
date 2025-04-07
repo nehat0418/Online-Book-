@@ -1,0 +1,104 @@
+package com.example.PaymentControllerTest;
+
+import com.example.demo.controller.PaymentController;
+import com.example.demo.entities.Cart;
+import com.example.demo.entities.Item;
+import com.example.demo.entities.Payment;
+import com.example.demo.repository.CartRepository;
+import com.example.demo.repository.PaymentRepository;
+import com.example.demo.services.PaymentServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+@WebMvcTest(PaymentController.class)
+public class PaymentControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Mock
+    private PaymentServiceImpl paymentServiceImpl;
+
+    @Mock
+    private CartRepository cartRepository;
+
+    @Mock
+    private PaymentRepository paymentRepository;
+
+    @InjectMocks
+    private PaymentController paymentController;
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    public void shouldInitiatePaymentTransactionSuccessfully() throws Exception {
+        // Mock the paymentServiceImpl.initiatePaymentTransaction() method to return true when called
+        when(paymentServiceImpl.initiatePaymentTransaction(any(Payment.class))).thenReturn(true);
+
+        // Mock the cartRepository.findByUserId() method to return a cart when called
+        Cart cart = new Cart();
+        cart.setUserId("userId");
+        Item item = new Item("itemId", "itemName", 50.0, 2);
+        cart.addItem(item);
+        when(cartRepository.findByUserId("userId")).thenReturn(cart);
+
+        // Perform POST request to initiatePaymentTransaction endpoint
+        Payment payment = new Payment("userId", 100.0, "1234567890123456", "123", "12/23", "Pending");
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/payment/userId")
+                .content("{\"userId\":\"userId\",\"amount\":100.0,\"cardNumber\":\"1234567890123456\",\"cvv\":\"123\",\"expiry\":\"12/23\",\"status\":\"Pending\"}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().string(""));
+    }
+
+    @Test
+    public void shouldFailToInitiatePaymentTransaction_InvalidPaymentInfo() throws Exception {
+        // Mock the cartRepository.findByUserId() method to return a cart when called
+        Cart cart = new Cart();
+        cart.setUserId("userId");
+        Item item = new Item("itemId", "itemName", 50.0, 2);
+        cart.addItem(item);
+        when(cartRepository.findByUserId("userId")).thenReturn(cart);
+
+        // Perform POST request to initiatePaymentTransaction endpoint with invalid payment info
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/payment/userId")
+                .content("{\"userId\":\"userId\",\"amount\":100.0,\"cardNumber\":\"\",\"cvv\":\"123\",\"expiry\":\"12/23\",\"status\":\"Pending\"}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().string("Fill all the requir"));
+    }
+
+    @Test
+    public void shouldGetUsersPurchases() throws Exception {
+        // Mock the paymentRepository.findPaymentsByUserId() method to return a list of payments when called
+        Payment payment = new Payment("userId", 100.0, "1234567890123456", "123", "12/23", "Completed");
+        when(paymentRepository.findPaymentsByUserId("userId")).thenReturn(Arrays.asList(payment));
+
+        // Perform GET request to getUsersPurchases endpoint
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/payment/userId")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].userId").value("userId"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].amount").value(100.0))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].status").value("Completed"));
+    }
+}

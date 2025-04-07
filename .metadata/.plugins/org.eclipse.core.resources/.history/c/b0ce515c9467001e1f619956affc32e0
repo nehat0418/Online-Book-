@@ -1,0 +1,52 @@
+package com.example.demo.services;
+
+import com.example.demo.entities.Payment;
+import com.example.demo.repository.PaymentRepository;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class PaymentServiceImpl implements PaymentService {
+
+	 private final PaymentRepository paymentRepository;
+
+	    public PaymentServiceImpl(PaymentRepository paymentRepository) {
+	        this.paymentRepository = paymentRepository;
+	    }
+    @Override
+    public boolean initiatePaymentTransaction(Payment payment) {
+        paymentRepository.save(payment);
+        return true;
+    }
+
+    @Override
+    public boolean validatePaymentInformation(Payment payment) {
+    
+       
+        if ( payment.getCVV().length() != 3) {
+            return false; // CVV must be 3 digits
+        }
+     if (payment.getCardNumber().length() != 16) {
+           return false; // Card number must be 16 digits
+         }
+        if ( payment.getAmount() == 0
+               ||payment.getCVV().equals("")
+                || payment.getCardNumber().equals(""))
+                {
+            return false;
+                }
+        
+        return true;
+    }
+
+	@Override
+	public Payment getPaymentById(String paymentId) {
+	    return paymentRepository.findById(paymentId).orElse(null);
+	}
+	@Override
+	public boolean validatePayment(Payment payment) {
+		
+		return false;
+	}
+	
+}
