@@ -1,0 +1,33 @@
+
+<div class="container">
+    <div style="width: 100%; text-align: center; text-decoration: underline;">Your Purchases</div>
+    <div class="sidebar" *ngFor="let purchase of purchases; let i = index">
+      <div class="head"><p>Purchase #{{i+1}}</p></div> 
+    <div id="cartItem"> 
+      <ul>
+        <li>
+          <div>
+            Name
+          </div>
+          <div>
+            Quantity
+          </div>
+        </li>
+          <li *ngFor="let item of purchase.items">
+            <div>
+              {{item.name}}
+            </div>
+            <div>
+              {{item.quantity}}
+            </div>
+          </li>
+      </ul>
+    </div> 
+    <div class="foot">
+      <h3> Total</h3>
+      <h2 id="total">₹ {{purchase.amount}}</h2>
+    </div>
+    </div>
+  </div>
+  
+

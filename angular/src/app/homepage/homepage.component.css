@@ -1,0 +1,60 @@
+.cta-button {
+  background: #f99d76;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 24px;
+  color: white;
+  cursor: pointer;
+}
+.container {
+  margin-top: 50px;
+}
+
+.book-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  width: 80%;
+  margin: 10px auto;
+}
+
+.book-item {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.book-item img {
+  width: 100%;
+  max-height: 350px;
+  object-fit: cover;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.book-item h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.book-item p {
+  margin-bottom: 10px;
+}
+
+.book-item button {
+  background-color: blue;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.book-item button:hover {
+  background-color: #0056b3;
+}
+
+.book-item p .label {
+  color: blue;
+}

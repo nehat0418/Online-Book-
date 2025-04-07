@@ -1,0 +1,27 @@
+.navbar {
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0px 0px 5px 0px rgba(78, 78, 78, 0.3);
+  padding: 16px 32px;
+}
+
+.navbar__logo {
+  cursor: pointer;
+ 
+
+  
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: unset;
+}

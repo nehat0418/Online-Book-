@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Online Bookstore - Login</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+</head>
+
+// Ye kya hai?
+
+<body ng-app="myApp" ng-controller="LoginController">
+  <div class="headline">Online Bookstore</div>
+  <div class="container">
+    <h1>Login</h1>
+    <label for="username">Username:</label>
+    <input type="text" id="username" placeholder="Enter username" name="username" required>
+    <label for="password">Password:</label>
+    <input type="password" id="password"  placeholder="Enter password"[(ngModel)]="password" name="password" required>
+    
+    <button class="btn mt-3" (click)="signIn()">Sign in</button>
+    
+  </div>
+  <script>
+    var app = angular.module('myApp', []);
+    app.controller('LoginController', function($scope) {
+      $scope.signIn = function() {
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+
+        // Perform validation logic here
+        if (password.length >= 9) {
+          alert('Login successful');
+          // Redirect to the homepage or perform other actions
+        } else {
+          alert('Password must be at least 9 characters');
+        }
+      };
+    });
+  </script>
+
+</body>
+</html>

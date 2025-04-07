@@ -1,0 +1,10 @@
+<div class="navbar" *ngIf="navbarShown">
+  <div class="navbar__logo">
+    <img [routerLink]="['/']" style="height: 28px;" src=" /assets/book-logo.jpg" />
+  </div>
+  <div class="navbar__links">
+    <a *ngFor="let link of links" (click)="navigateToPath(link.path)">{{
+      link.title
+    }}</a>
+  </div>
+</div>

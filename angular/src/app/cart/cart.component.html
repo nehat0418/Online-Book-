@@ -1,0 +1,39 @@
+
+  <div class="container">
+    <div class="sidebar">
+      <div class="head"><p>My Cart</p></div> 
+    <div id="cartItem"> 
+      <ul>
+        <li>
+          <div>
+            Name
+          </div>
+          <div>
+            Quantity
+          </div>
+        </li>
+          <li *ngFor="let item of cartItems">
+            <div>
+              {{item.name}}
+            </div>
+            <div>
+              <button (click)="updateCart('decrement', item)">
+                -
+              </button>
+              {{item.quantity}}
+              <button (click)="updateCart('increment', item)">
+                +             
+              </button>
+            </div>
+          </li>
+      </ul>
+    </div> 
+    <div class="foot">
+      <h3> Total</h3>
+      <h2 id="total">₹ {{total}}</h2>
+    </div>
+    </div>
+    <button class="button" (click)="proceedToPayment()">Proceed to Payment</button>  
+  </div>
+  
+

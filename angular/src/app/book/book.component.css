@@ -1,0 +1,166 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  max-height: 60px;
+}
+.book-item h3 i {
+  font-style: italic;
+}
+
+.book-item p .label {
+  color: blue;
+}
+
+.book-item p .price {
+  color: green;
+
+  margin-top: 10px;
+}
+
+.book-list {
+  margin-bottom: 40px;
+}
+
+.book-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.book-item {
+  width: 23%;
+  margin-bottom: 30px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  max-height: 800px;
+}
+
+.book-item img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.book-item h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.book-item p {
+  margin-bottom: 10px;
+}
+
+.book-item button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.book-item button:hover {
+  background-color: #0056b3;
+}
+
+h1,
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.feedback-form {
+  margin-top: 30px;
+}
+.feedback-form h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.feedback-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.feedback-form form div {
+  margin-bottom: 10px;
+}
+
+.feedback-form label {
+  font-weight: bold;
+}
+
+.feedback-form input[type="text"],
+.feedback-form textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.feedback-form button {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.feedback-form button:hover {
+  background-color: #45a049;
+}
+
+.feedback-form {
+  margin-top: 20px;
+  max-width: 400px; /* Adjust the max-width value as needed */
+}
+
+.feedback-form h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.feedback-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.feedback-form form div {
+  margin-bottom: 10px;
+}
+
+.feedback-form label {
+  font-weight: bold;
+}
+
+.feedback-form input[type="text"],
+.feedback-form textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.feedback-form button {
+  padding: 10px 16px;
+  background-color: #121412;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.feedback-form button:hover {
+  background-color: #45a049;
+}

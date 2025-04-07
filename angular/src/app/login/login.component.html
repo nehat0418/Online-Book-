@@ -1,0 +1,42 @@
+<div class="auth-container">
+  <div class="auth-from">
+    <div class="auth-heading">Login</div>
+    <label for="username">Username:</label>
+    <input
+      type="text"
+      id="username"
+      placeholder="Enter username"
+      name="username"
+      [(ngModel)]="username"
+      required
+    />
+    <label for="password">Password:</label>
+    <input
+      type="password"
+      id="password"
+      placeholder="Enter password"
+      name="password" 
+      [(ngModel)]="password"  
+      required
+    />
+
+    <!-- Link to navigate to the signup page -->
+    <span
+      style="
+        font-size: 12px;
+        margin-left: auto;
+        color: rgb(107, 107, 250);
+        margin-top: 6px;
+        cursor: pointer;
+      "
+      [routerLink]="['/signup']"
+    >
+      Need a new account?
+    </span>
+
+    <!-- Button to trigger the login process -->
+    <button style="width: 100%" class="primary-button" (click)="login()">
+      Sign in
+    </button>
+  </div>
+</div>

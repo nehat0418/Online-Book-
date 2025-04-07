@@ -1,0 +1,54 @@
+<div class="auth-container">
+  <div class="auth-from">
+    <div class="auth-heading">Sign up</div>
+    <label for="username">Email:</label>
+    <input
+      type="text"
+      id="username"
+      placeholder="Enter username"
+      name="username"
+      [(ngModel)]="username"
+      required
+    />
+    <!-- Input field for the email with two-way data binding using ngModel -->
+    <label for="password">Password:</label>
+    <input
+      type="password"
+      id="password"
+      placeholder="Enter password"
+      name="password"
+      [(ngModel)]="password"
+      required
+    />
+    <label for="name">Name:</label>
+    <input
+      type="text"
+      id="name"
+      placeholder="Enter your name"
+      [(ngModel)]="name"
+      required
+    />
+
+    <span
+      style="
+        font-size: 12px;
+        margin-left: auto;
+        
+        color: rgb(107, 107, 250);
+        margin-top: 6px;
+        cursor: pointer;
+      "
+      [routerLink]="['/login']"
+    >
+      Already have an account?
+    </span>
+
+    <span *ngIf="error" style="color: red;">
+      {{ error }}
+    </span>
+
+    <button style="width: 100%" class="primary-button" (click)="signup()">
+      Sign up
+    </button>
+  </div>
+</div>

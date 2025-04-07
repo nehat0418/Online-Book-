@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="book-list">
+    <h2>Book Catalog</h2>
+
+    <div class="book-row">
+       <!-- The *ngFor directive loops -->
+      <div *ngFor=" let book of books" class="book-item">
+        <img [src]="book.imageUrl" alt="{{ book.bookName }}" />
+        <h3>
+          <i><b>{{book.bookName}}</b></i>
+        </h3>
+        <p>
+          <span class="label">author: </span>{{book.author}}<br />
+          <span class="label">country: </span> {{book.country}}<br />
+          <span class="label">language: </span>{{book.language}}<br />
+          <span class="label">genre: </span>{{book.genre}}<br />
+          <span class="label">publisher: </span>{{book.publisher}}<br />
+          <span class="label">pages: </span>{{book.pages}}<br />
+         
+        </p>
+  
+        <p>Price: {{ book.price }}</p>
+        <button (click)="addToCart(book)">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>

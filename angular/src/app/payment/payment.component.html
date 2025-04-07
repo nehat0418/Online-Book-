@@ -1,0 +1,39 @@
+<div class="payment-page">
+    <div class="payment-form">
+      <h2 *ngIf="!paid">Payment Form</h2>
+  
+      <form *ngIf="!paid" (ngSubmit)="processPayment()">
+
+        <label for="cardNumber">Card Number:</label>
+        <input type="text" id="cardNumber" [(ngModel)]="payment.cardNumber" [ngModelOptions]="{standalone: true}" >
+        <span class="error" *ngIf="errors['cardNumber']">
+          {{ errors["cardNumber"] }}
+        </span>
+  
+        <label for="expiryDate">Expiry Date:</label>
+        <input type="text" id="expiryDate" [(ngModel)]="payment.expirationDate" [ngModelOptions]="{standalone: true}" >
+        <span class="error" *ngIf="errors['expiryDate']">
+          {{ errors["expiryDate"]}}
+        </span>
+  
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" [(ngModel)]="payment.CVV" [ngModelOptions]="{standalone: true}" >
+        <span class="error" *ngIf="errors['cvv']">
+          {{ errors['cvv'] }}
+        </span>
+  
+        
+        <button type="submit">Pay Now</button>
+      </form>
+
+      <p *ngIf="!paid" class="payment-status">{{ paymentStatus }}</p>
+  
+      <div *ngIf="paid">
+        <img style="width: 100%;" src="/assets/check-button.png" alt="Check">
+        <div style="color: gray; font-size: 14px; text-align: center;">
+          Your transaction is completed
+        </div>
+      </div>
+    </div>
+  </div>
+  
